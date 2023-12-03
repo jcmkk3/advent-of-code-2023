@@ -1,5 +1,5 @@
-from typing import Self, Iterable
 from dataclasses import dataclass
+from typing import Iterable, Self
 
 
 @dataclass
@@ -12,7 +12,7 @@ class Cubeset:
     def from_str(cls, text: str) -> Self:
         cubes = {color: int(n) for n, color in map(str.split, text.split(","))}
         return Cubeset(**cubes)
-    
+
     @property
     def power(self) -> int:
         return self.red * self.green * self.blue
@@ -40,7 +40,11 @@ class Game:
             getattr(self, color).append(getattr(cubeset, color))
 
     def is_valid_cubeset(self, cubeset: Cubeset) -> bool:
-        return cubeset.red >= max(self.red) and cubeset.green >= max(self.green) and cubeset.blue >= max(self.blue)
+        return (
+            cubeset.red >= max(self.red)
+            and cubeset.green >= max(self.green)
+            and cubeset.blue >= max(self.blue)
+        )
 
     @property
     def minimum_cubeset(self) -> Cubeset:
@@ -50,6 +54,7 @@ class Game:
 def solve1(games: Iterable[Game]) -> int:
     cubeset = Cubeset(red=12, green=13, blue=14)
     return sum(game.id for game in games if game.is_valid_cubeset(cubeset))
+
 
 def solve2(games: Iterable[Game]) -> int:
     return sum(cubeset.minimum_cubeset.power for cubeset in games)
