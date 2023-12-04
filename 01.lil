@@ -1,0 +1,43 @@
+on find_digits line do
+  extract value 
+  where "%*i%m" parse value
+  from "" split line
+end
+
+on make_number digits do
+  "%i" parse "" fuse (first digits),(last digits)
+end
+
+on replace_digits line do
+  replacement_map: insert old new with
+    "one"   "one1one"
+    "two"   "two2two"
+    "three" "three3three"
+    "four"  "four4four"
+    "five"  "five5five"
+    "six"   "six6six"
+    "seven" "seven7seven"
+    "eight" "eight8eight"
+    "nine"  "nine9nine"
+  end
+
+  each row in rows replacement_map
+    line: rtext.replace[line row.old row.new]
+  end
+
+  extract text from line
+end
+
+on solve1 lines do
+  digits: find_digits@lines
+  sum make_number@digits
+end
+
+on solve2 lines do
+  solve1[replace_digits@lines]
+end
+
+
+calibration_document: "\n" split read["input/01.txt"]
+show[solve1[calibration_document]]  # 54634
+show[solve2[calibration_document]]  # 53855

@@ -1,0 +1,35 @@
+on parse_game text do
+  game: "Game %[id]i: %[rounds]s" parse text
+  game.rounds: each cubeset in ";" split game.rounds
+    cubes: flip "%i %s" parse "," split cubeset
+    cubes[1] dict cubes[0]
+  end
+  each cubes round in game.rounds
+    ("id","round","red","green","blue") dict game.id,round,cubes.red,cubes.green,cubes.blue
+  end
+end
+
+on read_games path do
+  table raze parse_game@"\n" split read[path]
+end
+
+on solve1 games do
+  sum extract first id
+    where (max red) < 13
+    where (max green) < 14
+    where (max blue) < 15
+    by id
+  from games
+end
+
+on solve2 games do
+  sum extract
+    (max red) * (max green) * (max blue)
+    by id
+  from games
+end
+
+games: read_games["input/02.txt"]
+
+show[solve1[games]]  # 2545
+show[solve2[games]]  # 78111
