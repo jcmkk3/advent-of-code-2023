@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from typing import Self, Sequence
 
 
-@dataclass
+@dataclass(frozen=True)
 class ScratchCard:
     card_number: int
     player_numbers: set[int]

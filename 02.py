@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import Iterable, Self
 
 
-@dataclass
+@dataclass(frozen=True)
 class Cubeset:
     red: int = 0
     green: int = 0
@@ -18,7 +18,7 @@ class Cubeset:
         return self.red * self.green * self.blue
 
 
-@dataclass
+@dataclass(frozen=True)
 class Game:
     id: int
     red: list[int]

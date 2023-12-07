@@ -2,22 +2,11 @@ from dataclasses import dataclass
 from typing import Sequence
 import re
 
-INPUT = """467..114..
-...*......
-..35..633.
-......#...
-617*......
-.....+.58.
-..592.....
-......755.
-...$.*....
-.664.598.."""
-
 symbols = set(r"/-%@+&=$#*")
 _nums_pattern = re.compile(r"(\d+)")
 
 
-@dataclass
+@dataclass(frozen=True)
 class Point:
     x: int
     y: int
@@ -60,4 +49,4 @@ def solve1(schematic: Sequence[str]) -> int:
 with open("input/03.txt") as f:
     schematic = [line.strip() for line in f.readlines()]
 
-print(solve1(schematic))
+assert solve1(schematic) == 559667

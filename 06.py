@@ -5,7 +5,7 @@ type Milliseconds = int
 type Millimeters = int
 
 
-@dataclass
+@dataclass(frozen=True)
 class Race:
     time: Milliseconds
     distance: Millimeters

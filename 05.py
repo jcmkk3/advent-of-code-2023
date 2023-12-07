@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import Iterable, Self
 
 
-@dataclass
+@dataclass(frozen=True)
 class RangeMap:
     ranges: list[range]
     offsets: list[int]
